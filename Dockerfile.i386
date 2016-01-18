@@ -1,0 +1,16 @@
+FROM 32bit/ubuntu:14.04
+MAINTAINER "Shenja Sosna" <shenja@sosna.zp.ua>
+
+RUN  echo 'Acquire::http { Proxy "http://192.168.33.50:3142"; };' >> /etc/apt/apt.conf.d/01proxy
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN linux32 apt-get update && linux32 apt-get install -y ca-certificates python-pip gcc wget curl \
+    && curl -o /usr/local/bin/gosu  -fsSL "https://github.com/tianon/gosu/releases/download/1.7/gosu-$(dpkg --print-architecture)" \
+    && chmod +x /usr/local/bin/gosu \
+    && pip install dumb-init \
+    && apt-get autoclean -y --force-yes \
+    && rm -rf /var/lib/apt/lists/* 
+
+RUN rm -rf /etc/apt/apt.conf.d/01proxy
+
+

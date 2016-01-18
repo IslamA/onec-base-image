@@ -1,0 +1,10 @@
+FROM ubuntu:14.04
+MAINTAINER "Shenja Sosna" <shenja@sosna.zp.ua>
+
+RUN apt-get update && apt-get install -y ca-certificates python-pip gcc wget \
+    && wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture)" \
+        && wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/1.2/gosu-$(dpkg --print-architecture).asc" \
+        && gpg --verify /usr/local/bin/gosu.asc \
+        && rm /usr/local/bin/gosu.asc \
+        && chmod +x /usr/local/bin/gosu
+RUN linux32 pip install dumb-init
