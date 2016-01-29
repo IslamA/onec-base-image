@@ -4,20 +4,15 @@ MAINTAINER "Shenja Sosna" <shenja@sosna.zp.ua>
 #RUN  echo 'Acquire::http { Proxy "http://192.168.33.50:3142"; };' >> /etc/apt/apt.conf.d/01proxy
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN linux32 apt-get update && linux32 apt-get install -y -qq --force-yes language-pack-ru language-pack-ru-base \
-        language-pack-uk language-pack-uk-base ngrok-client wget curl zip unzip tar mono-runtime mono-mcs git-core \
+RUN linux32 apt-get update && linux32 apt-get install -y -qq --force-yes ngrok-client wget curl zip unzip tar mono-runtime mono-mcs git-core \
         x11vnc vnc4server xvfb supervisor novnc ttf-ubuntu-font-family libwebkitgtk-1.0-0 xfonts-cyrillic
 #RUN linux32 apt-get install -y -qq --force-yes openbox
 RUN linux32 apt-get install -y ratpoison fbpanel #lxsession
     # dpkg-divert --local --rename --add /sbin/initctl && ln -s /bin/true /sbin/initctl \
-RUN linux32 apt-get install -y -qq --force-yes --no-install-recommends  wine ttf-mscorefonts-installer   \
+RUN linux32 apt-get install -y -qq --force-yes --no-install-recommends wine  \
         && apt-get autoclean -y --force-yes \
         && rm -rf /var/lib/apt/lists/* \
         && rm -rf /etc/apt/apt.conf.d/01proxy
-
-RUN locale-gen ru_RU && locale-gen ru_RU.UTF-8 \
-    && locale-gen uk_UA && locale-gen uk_UA.UTF-8 \
-    && update-locale LANG=ru_RU.UTF-8
 
 RUN wget -q --continue -O /tmp/oscript.zip http://oscript.io/downloads/night-build/zip \
         && unzip -o -q /tmp/oscript.zip -x "lib/*" -d /opt/oscript  \
