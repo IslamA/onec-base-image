@@ -1,7 +1,7 @@
 FROM daald/ubuntu32:trusty
 MAINTAINER "Shenja Sosna" <shenja@sosna.zp.ua>
 
-RUN  echo 'Acquire::http { Proxy "http://consul-io.node.cloud.consul:3142"; };' >> /etc/apt/apt.conf.d/01proxy
+RUN nc -z w3 consul-io.node.cloud.consul 3142 && echo 'Acquire::http { Proxy "http://consul-io.node.cloud.consul:3142"; };' >> /etc/apt/apt.conf.d/01proxy || echo "not found"
 RUN echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 ENV DEBIAN_FRONTEND noninteractive
