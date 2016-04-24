@@ -1,4 +1,4 @@
-FROM onec/32bit/baseimage:latest
+FROM silverbulleters/vanessa-32bit-baseimage
 MAINTAINER "Shenja Sosna" <shenja@sosna.zp.ua>
 
 ENV DEBIAN_FRONTEND noninteractive
